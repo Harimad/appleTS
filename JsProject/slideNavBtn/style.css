@@ -1,0 +1,75 @@
+.slide {
+  display: flex;
+  flex-wrap: nowrap;
+  overflow: hidden; /*컨테이너안의 내용이 해당 컨테이너 크기(너비, 높이)를 넘어가면, 보이지 않기 위함 */
+  position: relative; /*자식 태그인 slide-btn에게 position absolute 적용하기 위함*/
+  width: 100%;
+}
+
+.slide-box {
+  /* 가운데 정렬 */
+  display: flex;
+  justify-content: center;
+  align-items: center;
+
+  /* 👉or👈 버튼 클릭시 left offeset 값을 적용시키기 위함 */
+  position: relative;
+  left: 0px;
+
+  /* 사이즈 */
+  width: 100%;
+  height: 300px;
+
+  /* flex item의 flex-shrink 기본값이 1이다. 즉, 컨테이너 크기에 맞게 줄어듬. */
+  /* 슬라이드 구현을 위해 줄어들지 않도록 0 줌 */
+  flex-shrink: 0;
+
+  transition: left 0.2s;
+}
+
+.slide-btn {
+  /* 가운데 정렬 */
+  display: flex;
+  justify-content: center;
+  align-items: center;
+
+  position: absolute;
+
+  top: calc(50% - 16px); /* 버튼 중앙 위치*/
+
+  width: 2rem;
+  height: 2rem;
+
+  border-radius: 100%;
+  background: rgba(200, 200, 200, 0.7);
+  cursor: pointer;
+  user-select: none;
+}
+
+.slide-btn-left {
+  left: 10px;
+}
+
+.slide-btn-right {
+  right: 10px;
+}
+
+.slide-box {
+  font-size: 2rem;
+  color: ivory;
+}
+.slide-box:first-child {
+  background-color: red;
+}
+.slide-box:nth-child(2) {
+  background-color: orange;
+}
+.slide-box:nth-child(3) {
+  background-color: yellow;
+}
+.slide-box:nth-child(4) {
+  background-color: green;
+}
+.slide-box:nth-child(5) {
+  background-color: blue;
+}

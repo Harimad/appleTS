@@ -1,0 +1,160 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+	<meta charset="UTF-8">
+	<meta http-equiv="X-UA-Compatible" content="IE=edge">
+	<meta name="viewport" content="width=device-width, initial-scale=1.0">
+	<title>Vanilla JS Slide Navigation</title>
+	<style>
+		.slide {
+			display: flex;
+			flex-wrap: nowrap;
+			overflow: hidden;
+			/*컨테이너안의 내용이 해당 컨테이너 크기(너비, 높이)를 넘어가면, 보이지 않기 위함 */
+			position: relative;
+			/*자식 태그인 slide-btn에게 position absolute 적용하기 위함*/
+			width: 100%;
+		}
+
+		.slide-box {
+			/* 가운데 정렬 */
+			display: flex;
+			justify-content: center;
+			align-items: center;
+
+			/* 👉or👈 버튼 클릭시 left offeset 값을 적용시키기 위함 */
+			position: relative;
+			left: 0px;
+
+			/* 사이즈 */
+			width: 100%;
+			height: 300px;
+
+			/* flex item의 flex-shrink 기본값이 1이다. 즉, 컨테이너 크기에 맞게 줄어듬. */
+			/* 슬라이드 구현을 위해 줄어들지 않도록 0 줌 */
+			flex-shrink: 0;
+
+			transition: left 0.2s;
+		}
+
+		.slide-btn {
+			/* 가운데 정렬 */
+			display: flex;
+			justify-content: center;
+			align-items: center;
+
+			position: absolute;
+
+			top: calc(50% - 16px);
+			/* 버튼 중앙 위치*/
+
+			width: 2rem;
+			height: 2rem;
+
+			border-radius: 100%;
+			background: rgba(200, 200, 200, 0.7);
+			cursor: pointer;
+			user-select: none;
+		}
+
+		.slide-btn-left {
+			left: 10px;
+		}
+
+		.slide-btn-right {
+			right: 10px;
+		}
+
+		.slide-box {
+			font-size: 2rem;
+			color: ivory;
+		}
+
+		.slide-box:first-child {
+			background-color: red;
+		}
+
+		.slide-box:nth-child(2) {
+			background-color: orange;
+		}
+
+		.slide-box:nth-child(3) {
+			background-color: yellow;
+		}
+
+		.slide-box:nth-child(4) {
+			background-color: green;
+		}
+
+		.slide-box:nth-child(5) {
+			background-color: blue;
+		}
+
+	</style>
+</head>
+
+<body>
+	<div class="slide">
+		<div class="slide-box">1</div>
+		<div class="slide-box">2</div>
+		<div class="slide-box">3</div>
+		<div class="slide-box">4</div>
+		<div class="slide-box">5</div>
+		<div class="slide-btn slide-btn-left ">👈</div>
+		<div class="slide-btn slide-btn-right ">👉</div>
+	</div>
+
+	<script>
+		const $slide = document.querySelector('.slide')
+		const $leftBtn = document.querySelector('.slide-btn-left')
+		const $rightBtn = document.querySelector('.slide-btn-right')
+		const $slideItems = document.querySelectorAll('.slide-box')
+
+		let slideWidth = $slide.clientWidth // 슬라이드 너비
+		let slideNums = $slideItems.length // 슬라이드 개수
+		let currentSlide = 1 // 현재 슬라이드 번호
+
+		const rightBtnEvent = () => {
+			currentSlide++ // 슬라이드 번호 +1
+
+			if (currentSlide <= slideNums) {
+				const offset = slideWidth * (currentSlide - 1) // 슬라이드 이동을 위한 offset 계산
+
+				// 각 슬라이드의 left에 offset 적용 (-offset을 줘서 왼쪽으로 이동)
+				$slideItems.forEach(item => {
+					item.setAttribute('style', `left: ${-offset}px`)
+				})
+			} else {
+				currentSlide--
+			}
+		}
+
+		const leftBtnEvent = () => {
+			currentSlide-- // 슬라이드 번호 -1
+
+			if (currentSlide > 0) {
+				const offset = slideWidth * (currentSlide - 1)
+				$slideItems.forEach(item => {
+					item.setAttribute('style', `left: ${-offset}px`)
+				})
+			} else {
+				currentSlide++
+			}
+		}
+
+		// '👉' 버튼 이벤트 추가
+		$rightBtn.addEventListener('click', rightBtnEvent)
+
+		// '👈' 버튼 이벤트 추가
+		$leftBtn.addEventListener('click', leftBtnEvent)
+
+		// 브라우저 화면 너비가 변경될 때도 slideWidth값 최신화
+		window.addEventListener('resize', () => {
+			slideWidth = $slide.clientWidth // 슬라이드 너비
+		})
+
+	</script>
+</body>
+
+</html>
