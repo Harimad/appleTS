@@ -73,3 +73,28 @@
 .slide-box:nth-child(5) {
   background-color: blue;
 }
+
+ul,
+li {
+  list-style: none;
+  padding: 0;
+  margin: 0;
+}
+.slide_pagination {
+  display: flex;
+  gap: 5px;
+  position: absolute;
+  bottom: 0;
+  /* 가운데로 위치 */
+  left: 50%;
+  transform: translateX(-50%);
+}
+
+.slide_pagination > li {
+  color: #7f7fffff;
+  cursor: pointer;
+  font-size: 2rem;
+}
+.slide_pagination > li.active {
+  color: #ffb5ff;
+}
